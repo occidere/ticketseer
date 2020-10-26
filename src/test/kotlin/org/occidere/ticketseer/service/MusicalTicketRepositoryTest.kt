@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.occidere.ticketseer.configuration.ElasticsearchConfiguration
 import org.occidere.ticketseer.enums.SiteType
-import org.occidere.ticketseer.enums.TicketType
 import org.occidere.ticketseer.vo.MusicalTicket
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -21,20 +20,22 @@ import org.springframework.test.context.ContextConfiguration
 @EnableElasticsearchRepositories
 @ContextConfiguration(classes = [
     ElasticsearchConfiguration::class,
-    MusicalTicketRepository::class
+    TicketRepository::class,
+    MusicalTicketService::class
 ])
-class MusicalTicketRepositoryTest {
+class TicketRepositoryTest {
 
     @Autowired
-    private val musicalRepository: MusicalTicketRepository? = null
+    private val musicalTicketService: MusicalTicketService? = null
+
+    @Autowired
+    private val ticketRepository: TicketRepository<MusicalTicket>? = null
 
     @Test
     fun findAllByTicketTypeAndSvcYnTest() {
         // BUILD
-        println("Hello World")
-
         // OPERATE
-        val musicalTickets = musicalRepository!!.findByTicketTypeAndEndDateGreaterThanEqual(TicketType.MUSICAL)
+        val musicalTickets = musicalTicketService!!.findAllMusicals()
 
         // CHECK
         println("musical = $musicalTickets")
@@ -51,15 +52,14 @@ class MusicalTicketRepositoryTest {
                 pageUrl = "http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GroupCode=20008287",
                 startDate = "20201218",
                 endDate = "20210301",
-                siteType = SiteType.INTERPARK,
-                imgUrl = "http://ticketimage.interpark.com/Play/image/small/20/20008287.gif"
+                siteType = SiteType.INTERPARK
         )
 
         // OPERATE
-        val saved = musicalRepository!!.save(musicalTicket)
+        val saved = musicalTicketService!!.save(musicalTicket)
 
         // CHECK
-        val found = musicalRepository.findById(musicalTicket.id).get()
+        val found = ticketRepository!!.findById(musicalTicket.id).get()
         println("Saved = ${saved.toJsonString()}")
         println("Found = ${found.toJsonString()}")
         Assertions.assertEquals(saved.toJsonString(), found.toJsonString())
