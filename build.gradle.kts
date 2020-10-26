@@ -28,6 +28,7 @@ val apacheCommonsLangVersion = "3.11"
 val apacheCommonsCollectionsVersion = "4.4"
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-batch")
     implementation("org.springframework.boot:spring-boot-starter-data-elasticsearch")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
