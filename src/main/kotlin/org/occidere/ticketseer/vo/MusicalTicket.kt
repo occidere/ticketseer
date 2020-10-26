@@ -3,12 +3,9 @@ package org.occidere.ticketseer.vo
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.occidere.ticketseer.enums.SiteType
 import org.occidere.ticketseer.enums.TicketType
-import org.occidere.ticketseer.enums.YnType
 import org.occidere.ticketseer.util.JacksonUtils
 import org.springframework.data.annotation.Id
 import org.springframework.data.elasticsearch.annotations.Document
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 /**
  * @author occidere
@@ -31,8 +28,7 @@ data class MusicalTicket(
         val pageUrl: String,
         val startDate: String,
         val endDate: String,
-        val siteType: SiteType,
-        val imgUrl: String
+        val siteType: SiteType
 ) {
     val ticketType: TicketType = TicketType.MUSICAL
 
