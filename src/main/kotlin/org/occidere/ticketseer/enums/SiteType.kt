@@ -7,6 +7,6 @@ package org.occidere.ticketseer.enums
  * @since 2020-10-23
  */
 enum class SiteType(name: String) {
-    INTERPARK("interpark"),
-    YES24("yes24")
+    INTERPARK("INTERPARK"),
+    YES24("YES24")
 }

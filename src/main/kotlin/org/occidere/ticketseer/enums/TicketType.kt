@@ -7,5 +7,5 @@ package org.occidere.ticketseer.enums
  * @since 2020-10-23
  */
 enum class TicketType(name: String) {
-    MUSICAL("musical")
+    MUSICAL("MUSICAL")
 }
