@@ -1,27 +1,16 @@
 package org.occidere.ticketseer
 
-import org.occidere.ticketseer.service.MusicalTicketRepository
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.ApplicationArguments
-import org.springframework.boot.ApplicationRunner
+import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 import org.springframework.boot.runApplication
+import kotlin.system.exitProcess
 
-@SpringBootApplication
-class TicketseerApplication : ApplicationRunner {
-
-    @Autowired
-    private val musicalTicketRepository: MusicalTicketRepository? = null
-
-    override fun run(args: ApplicationArguments?) {
-        // TODO: Implements business logic here
-
-        // 1. args 로 어떤 task 를 할 것인지 입력받은것 파싱
-
-        // 2. 지정한 task 수행 or 없으면 에러 로깅
-    }
-}
+@SpringBootApplication(exclude = [DataSourceAutoConfiguration::class])
+class TicketseerApplication
 
 fun main(args: Array<String>) {
-    runApplication<TicketseerApplication>(*args)
+    val context = runApplication<TicketseerApplication>(*args)
+    val exitCode = SpringApplication.exit(context)
+    exitProcess(exitCode)
 }

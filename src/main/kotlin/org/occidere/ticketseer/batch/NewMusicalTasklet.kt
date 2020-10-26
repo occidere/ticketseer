@@ -1,14 +1,16 @@
-package org.occidere.ticketseer.task
+package org.occidere.ticketseer.batch
 
 import org.apache.logging.log4j.LogManager
 import org.occidere.ticketseer.crawler.InterparkCrawler
-import org.occidere.ticketseer.enums.TicketType
 import org.occidere.ticketseer.service.LineMessengerService
 import org.occidere.ticketseer.service.MusicalTicketRepository
 import org.occidere.ticketseer.util.MessageBuildUtils
-import org.occidere.ticketseer.vo.Counter
+import org.springframework.batch.core.StepContribution
+import org.springframework.batch.core.configuration.annotation.StepScope
+import org.springframework.batch.core.scope.context.ChunkContext
+import org.springframework.batch.core.step.tasklet.Tasklet
+import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.stereotype.Component
-import java.lang.Exception
 
 /**
  * @author occidere
@@ -16,43 +18,39 @@ import java.lang.Exception
  * @Github: https://github.com/occidere
  * @since 2020-10-23
  */
+@StepScope
 @Component
-class NewMusicalTask(private val musicalTicketRepository: MusicalTicketRepository, private val lineMessengerService: LineMessengerService) : Task {
+class NewMusicalTasklet(private val musicalTicketRepository: MusicalTicketRepository, private val lineMessengerService: LineMessengerService) : Tasklet {
     private val log = LogManager.getLogger()
 
-    override fun run(args: Array<String>) {
-        log.info("Musical Ticket Task!!")
+    override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus {
+        log.info("New musical ticket task start!")
 
         // 1. Fetch all musicals from Interpark
         val latest = InterparkCrawler.getMusicalTickets()
         log.info("Latest musical count: {}", latest.size)
 
         // 2. Fetch all musicals from DB
-        val prev = musicalTicketRepository.findAllByTicketType(TicketType.MUSICAL)
+        val prev = musicalTicketRepository.findAllByTicketType()
         log.info("Prev musical count: {}", prev.size)
 
-        // 3. Diff & Find new musicals
-        val newMusicals = latest - prev
-        log.info("New musical count: {}", newMusicals.size)
-
-        // 4. Send notification
-        val result = newMusicals.map { MessageBuildUtils.createNewMusicalMessage(it) }
-                .filter { it.isNotBlank() }
-                .map {
+        // 3. Find new musicals & Send message
+        val processSuccessMusicalTickets = (latest - prev)
+                .mapNotNull {
                     try {
-                        lineMessengerService.sendPushMessage(it)
-                        Counter(1, 1, 0)
+                        lineMessengerService.sendPushMessage(MessageBuildUtils.createNewMusicalMessage(it))
+                        it
                     } catch (e: Exception) {
                         log.error("Message send failed", e)
-                        Counter(1, 0, 1)
+                        null
                     }
-                }.reduce { acc, counter -> acc + counter }
-        log.info("Total: {}, Success: {}, Fail: {}", result.total, result.success, result.fail)
+                }.toList()
+        log.info("Success count of new musicals: {}", processSuccessMusicalTickets.size)
 
         // 5. Save all musicals to DB
+        musicalTicketRepository.saveAll(latest)
+        log.info("New musical ticket task finished!")
 
-        log.info("Musical Ticket Task Finished!!")
+        return RepeatStatus.FINISHED
     }
-
-
 }
