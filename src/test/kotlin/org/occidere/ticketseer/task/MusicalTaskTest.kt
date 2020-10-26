@@ -35,8 +35,8 @@ class MusicalTaskTest {
                         place = "샤롯데씨어터",
                         pageUrl = "http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=20007209",
                         siteType = SiteType.INTERPARK,
-                        startDate = "20200909",
-                        endDate = "20201206"
+                        startDate = "2020-09-09",
+                        endDate = "2020-12-06"
                 ),
                 MusicalTicket(
                         id = "3",
@@ -44,8 +44,8 @@ class MusicalTaskTest {
                         place = "블루스퀘어 인터파크홀",
                         pageUrl = "http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GroupCode=20006380",
                         siteType = SiteType.INTERPARK,
-                        startDate = "20201110",
-                        endDate = "20210117"
+                        startDate = "2020-11-10",
+                        endDate = "2021-01-17"
                 )
         )
         val prev = listOf(
@@ -55,8 +55,8 @@ class MusicalTaskTest {
                         place = "샤롯데씨어터",
                         pageUrl = "http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=20007209",
                         siteType = SiteType.INTERPARK,
-                        startDate = "20200909",
-                        endDate = "20201206"
+                        startDate = "2020-09-09",
+                        endDate = "2020-12-06"
                 ),
                 MusicalTicket(
                         id = "2",
@@ -64,8 +64,8 @@ class MusicalTaskTest {
                         place = "샤롯데씨어터",
                         pageUrl = "http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=20008287",
                         siteType = SiteType.INTERPARK,
-                        startDate = "20201218",
-                        endDate = "20210301"
+                        startDate = "2020-12-18",
+                        endDate = "2021-03-01"
                 )
         )
 

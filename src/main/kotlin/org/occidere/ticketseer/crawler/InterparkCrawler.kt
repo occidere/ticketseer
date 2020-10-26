@@ -13,6 +13,7 @@ import java.util.stream.Collectors
 object InterparkCrawler : Crawler() {
     private const val ROOT_URL = "http://ticket.interpark.com"
     private const val MUSICAL_URL = "$ROOT_URL/TPGoodsList.asp?Ca=Mus"
+    private fun toIsoDateFormat(yyyyMMdd: String) = "${yyyyMMdd.substring(0, 4)}-${yyyyMMdd.subSequence(4, 6)}-${yyyyMMdd.substring(6)}"
 
     fun getMusicalTickets(): List<MusicalTicket> = getDocument(MUSICAL_URL)
             .select("div.stit > table > tbody > tr").stream()
@@ -28,8 +29,8 @@ object InterparkCrawler : Crawler() {
                 val place = placeDateInfo.first().getElementsByTag("a")[0].text().trim()
 
                 val dates = placeDateInfo[1].text().split("~")
-                val startDate = dates[0].replace(Regex("[^0-9]"), "")
-                val endDate = dates[1].replace(Regex("[^0-9]"), "")
+                val startDate = toIsoDateFormat(dates[0].replace(Regex("[^0-9]"), ""))
+                val endDate = toIsoDateFormat(dates[1].replace(Regex("[^0-9]"), ""))
 
                 MusicalTicket(
                         id = groupCode,
