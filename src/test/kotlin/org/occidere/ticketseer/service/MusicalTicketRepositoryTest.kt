@@ -20,22 +20,18 @@ import org.springframework.test.context.ContextConfiguration
 @EnableElasticsearchRepositories
 @ContextConfiguration(classes = [
     ElasticsearchConfiguration::class,
-    TicketRepository::class,
-    MusicalTicketService::class
+    MusicalTicketRepository::class
 ])
-class TicketRepositoryTest {
+class MusicalTicketRepositoryTest {
 
     @Autowired
-    private val musicalTicketService: MusicalTicketService? = null
-
-    @Autowired
-    private val ticketRepository: TicketRepository<MusicalTicket>? = null
+    private val musicalTicketRepository: MusicalTicketRepository? = null
 
     @Test
     fun findAllByTicketTypeAndSvcYnTest() {
         // BUILD
         // OPERATE
-        val musicalTickets = musicalTicketService!!.findAllMusicals()
+        val musicalTickets = musicalTicketRepository!!.findAllByTicketType()
 
         // CHECK
         println("musical = $musicalTickets")
@@ -56,10 +52,10 @@ class TicketRepositoryTest {
         )
 
         // OPERATE
-        val saved = musicalTicketService!!.save(musicalTicket)
+        val saved = musicalTicketRepository!!.save(musicalTicket)
 
         // CHECK
-        val found = ticketRepository!!.findById(musicalTicket.id).get()
+        val found = musicalTicketRepository.findById(musicalTicket.id).get()
         println("Saved = ${saved.toJsonString()}")
         println("Found = ${found.toJsonString()}")
         Assertions.assertEquals(saved.toJsonString(), found.toJsonString())
