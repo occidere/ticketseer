@@ -26,6 +26,13 @@
 
 <br>
 
+## 알람 구독
+- Line Bot QR
+
+    <img src="https://user-images.githubusercontent.com/20942871/97531201-09628480-19f7-11eb-8c4a-6e10721aa15c.png" width=200/>
+
+<br>
+
 ## Build & Run
 
 ### Gradle
