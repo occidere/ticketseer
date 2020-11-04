@@ -40,7 +40,7 @@ class LineMessengerServiceTest {
         val msg = MessageBuildUtils.createNewMusicalMessage(musicalTicket)
 
         // OPERATE
-        service!!.sendPushMessage(msg, true)
+        service!!.sendBroadcastMessage(msg, true)
 
         // CHECK
         println(msg)
@@ -81,7 +81,7 @@ class LineMessengerServiceTest {
         val msg = MessageBuildUtils.createOnScreenMusicalMessage(musicals)
 
         // OPERATE
-        service!!.sendPushMessage(msg)
+        service!!.sendBroadcastMessage(msg)
 
         // CHECK
         println(msg)

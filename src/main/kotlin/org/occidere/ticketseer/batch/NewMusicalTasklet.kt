@@ -38,7 +38,7 @@ class NewMusicalTasklet(private val musicalTicketRepository: MusicalTicketReposi
         val processSuccessMusicalTickets = (latest - prev)
                 .mapNotNull {
                     try {
-                        lineMessengerService.sendPushMessage(MessageBuildUtils.createNewMusicalMessage(it))
+                        lineMessengerService.sendBroadcastMessage(MessageBuildUtils.createNewMusicalMessage(it))
                         it
                     } catch (e: Exception) {
                         log.error("Message send failed", e)

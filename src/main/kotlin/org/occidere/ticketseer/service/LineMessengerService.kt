@@ -1,10 +1,9 @@
 package org.occidere.ticketseer.service
 
 import com.linecorp.bot.client.LineMessagingClient
-import com.linecorp.bot.model.PushMessage
+import com.linecorp.bot.model.Broadcast
 import com.linecorp.bot.model.message.TextMessage
 import com.linecorp.bot.model.response.BotApiResponse
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
 /**
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Service
  * @since 2020-10-26
  */
 @Service
-class LineMessengerService(private val client: LineMessagingClient, @Value("\${line.bot.id}") private val lineBotId: String) {
+class LineMessengerService(private val client: LineMessagingClient) {
 
-    fun sendPushMessage(msg: String, notificationDisabled: Boolean = false): BotApiResponse =
-            client.pushMessage(PushMessage(lineBotId, TextMessage(msg), notificationDisabled)).get()
+    fun sendBroadcastMessage(msg: String, notificationDisabled: Boolean = false): BotApiResponse =
+            client.broadcast(Broadcast(TextMessage(msg), notificationDisabled)).get()
 }

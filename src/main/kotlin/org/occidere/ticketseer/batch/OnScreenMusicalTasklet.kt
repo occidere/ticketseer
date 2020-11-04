@@ -33,7 +33,7 @@ class OnScreenMusicalTasklet(
         log.info("On screen musical count: {}", onScreenMusicalTickets.size)
 
         // 2. Send notification
-        lineMessengerService.sendPushMessage(MessageBuildUtils.createOnScreenMusicalMessage(onScreenMusicalTickets))
+        lineMessengerService.sendBroadcastMessage(MessageBuildUtils.createOnScreenMusicalMessage(onScreenMusicalTickets))
         log.info("On screen musical task finished!")
 
         return RepeatStatus.FINISHED
