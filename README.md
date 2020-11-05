@@ -44,12 +44,10 @@ gradle build -x test
 java -jar build/libs/ticketseer-0.0.1-SNAPSHOT.jar \
     --job.name=${JOB_NAME} \
     --es.endpoint=${ES_ENDPOINT} \
-    --line.bot.id=${LINE_BOT_ID} \
     --line.channel.token=${LINE_CHANNEL_ID}
 ```
 
 ### Run Parameters
 - `job.name`: `newMusicalJob`, `onScreenMusicalJob`
 - `es.endpoint`: Elasticsearch endpoint. ex) `localhost:9200`
-- `line.bot.id`: Line messenger bot id. ex) `U1b42e0f....`
 - `line.channel.token`: Line messenger channel token. ex) `AkFx3j/+sD....`
