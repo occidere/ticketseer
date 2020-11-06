@@ -31,6 +31,7 @@
 
     <img src="https://user-images.githubusercontent.com/20942871/97531201-09628480-19f7-11eb-8c4a-6e10721aa15c.png" width=200/>
 
+    <a href="https://lin.ee/kuaiMLJ"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ko.png" alt="친구 추가" height="36" border="0"></a>
 <br>
 
 ## Build & Run
